@@ -1,0 +1,19 @@
+div .focus {
+    height: 460px;
+}
+div .focus img {
+       text-align: center;
+       max-height: 430px;
+    }
+    
+div .next-focus {
+    height: 220px;
+}
+
+div .next-focus img {
+    max-height: 200px;
+}
+
+.current-staff {
+    font-size: large;
+}
