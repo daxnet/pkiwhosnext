@@ -14,7 +14,7 @@ module WhosNextApplication {
 
         constructor(private $scope: IWhosNextScope) {
             $scope.vm = this;
-            $scope.totalSeconds = 5;
+            $scope.totalSeconds = 70;
             this.model = Staff.init();
             this.reset();
             setInterval(() => { $scope.currentTime = new Date().toLocaleTimeString(); $scope.$apply(); }, 1000);
