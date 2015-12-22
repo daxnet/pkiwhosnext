@@ -38,7 +38,7 @@ var WhosNextApplication;
         function WhosNextController($scope) {
             this.$scope = $scope;
             $scope.vm = this;
-            $scope.totalSeconds = 5;
+            $scope.totalSeconds = 70;
             this.model = WhosNextApplication.Staff.init();
             this.reset();
             setInterval(function () { $scope.currentTime = new Date().toLocaleTimeString(); $scope.$apply(); }, 1000);
