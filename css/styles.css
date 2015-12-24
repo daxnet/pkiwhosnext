@@ -1,19 +1,32 @@
 div .focus {
-    height: 460px;
+    height: 510px;
 }
 div .focus img {
        text-align: center;
-       max-height: 430px;
+       max-height: 480px;
     }
     
 div .next-focus {
-    height: 220px;
+    height: 260px;
 }
 
 div .next-focus img {
-    max-height: 200px;
+    max-height: 230px;
 }
 
 .current-staff {
     font-size: large;
 }
+
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+    font-size: larger;
+ }
+ 

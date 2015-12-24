@@ -1,106 +1,112 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/angular.min.js"></script>
-        <script src="js/application.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/styles.css" />
-        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
-        <title>PerkinElmer Who's the Next Guy?</title>
-    </head>
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">PerkinElmer Informatics R&amp;D Who's Next</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a target="_blank" href="https://github.com/daxnet/pkiwhosnext">GitHub</a>
-                        </li>
-                        <li>
-                            <a target="_blank" href="http://www.typescriptlang.org">TypeScript</a>
-                        </li>
-                    </ul>
-                </div>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/application.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+    <title>PerkinElmer Who's the Next Guy?</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">PerkinElmer Informatics R&amp;D Who's Next</a>
             </div>
-        </nav>
-        <div id="main" class="container" ng-app="whosnext" ng-controller="whosNextController">
-            
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Now it is me ({{currentStaff.name}})
-                        </div>
-                        <div class="panel-body focus">
-                            <img class="img img-responsive center-block" src="{{currentStaff.file}}"/>  
-                        </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a target="_blank" href="https://github.com/daxnet/pkiwhosnext">GitHub</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="http://www.typescriptlang.org">TypeScript</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="main" class="container" ng-app="whosnext" ng-controller="whosNextController">
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Now it is me ({{currentStaff.name}})
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            I am the next ({{nextStaff.name}})
-                        </div>
-                        <div class="panel-body next-focus">
-                            <img class="img img-responsive center-block" src="{{nextStaff.file}}"/>  
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Status
-                        </div>
-                        <div class="panel-body">
-                            <p class="current-staff">
-                                Current Time: {{currentTime}}
-                            </p>
-                            <p class="current-staff">
-                                Staffs: {{vm.currentIdx + 1}} / {{vm.model.length}}
-                            </p>
-                            <p class="current-staff text-primary">
-                                Current: {{remainingSeconds}} / {{totalSeconds}}
-                            </p>
-                        </div>
+                    <div class="panel-body focus">
+                        <img class="img img-responsive center-block" src="{{currentStaff.file}}" />
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="pull-left">
-                        <button type="button" class="btn btn-warning" ng-disabled="startDisabled" ng-click="vm.reset();">
-                            <span class="glyphicon glyphicon-repeat"></span>
-                            Restart
-                        </button>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        I am the next ({{nextStaff.name}})
                     </div>
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-primary" ng-click="vm.start();" ng-disabled="startDisabled">
-                            <span class="glyphicon glyphicon-play"></span>
-                            Start
-                        </button>
-                        <button type="button" class="btn btn-primary" ng-click="vm.stop();" ng-disabled="stopDisabled">
-                            <span class="glyphicon glyphicon-stop"></span>
-                            Stop
-                        </button>
-                        <button type="button" class="btn btn-default" ng-click="vm.skip();" ng-disabled="skipDisabled">
-                            <span class="glyphicon glyphicon-forward"></span>
-                            Skip
-                        </button>
+                    <div class="panel-body next-focus">
+                        <img class="img img-responsive center-block" src="{{nextStaff.file}}" />
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Status
+                    </div>
+                    <div class="panel-body">
+                        <p class="current-staff">
+                            Current Time: {{currentTime}}
+                        </p>
+                        <p class="current-staff">
+                            Staffs: {{vm.currentIdx + 1}} / {{vm.model.length}}
+                        </p>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: {{remainingSeconds * 100 / totalSeconds}}%">
+                                        <span>{{remainingSeconds}} / {{totalSeconds}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer>
-            <hr/>
-            <div class="pull-right">
-                <p class="text-muted">Copyright &copy; 2015-2016 PerkinElmer Inc.</p>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-warning" ng-disabled="startDisabled" ng-click="vm.reset();">
+                        <span class="glyphicon glyphicon-repeat"></span> Restart
+                    </button>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" ng-click="vm.start();" ng-disabled="startDisabled">
+                        <span class="glyphicon glyphicon-play"></span> Start
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="vm.stop();" ng-disabled="stopDisabled">
+                        <span class="glyphicon glyphicon-stop"></span> Stop
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="vm.skip();" ng-disabled="skipDisabled">
+                        <span class="glyphicon glyphicon-forward"></span> Skip
+                    </button>
+                </div>
             </div>
-        </footer>
-    </body>
+        </div>
+    </div>
+    <footer>
+        <hr/>
+        <div class="pull-right">
+            <p class="text-muted">Copyright &copy; 2015-2016 PerkinElmer Inc.</p>
+        </div>
+    </footer>
+</body>
+
 </html>
