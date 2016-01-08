@@ -24,7 +24,8 @@ var WhosNextApplication;
                 new Staff(13, "Sunny Sun", "images/Sunny Sun.jpg"),
                 new Staff(14, "Tim Liang", "images/Tim Liang.jpg"),
                 new Staff(15, "Wilson Tian", "images/Wilson Tian.jpg"),
-                new Staff(16, "Zoe Zhao", "images/Zoe Zhao.jpg")];
+                new Staff(16, "Zoe Zhao", "images/Zoe Zhao.jpg"),
+                new Staff(17, "Boris Liu", "images/Boris Liu.jpg")];
         };
         return Staff;
     })();
