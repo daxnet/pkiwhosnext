@@ -1,44 +1,28 @@
-# PKI WhosNext Application
-PKI R&D requires every team member to share the latest news from any industry in the bi-weekly group meeting. Everyone will be given 1 minute. This application will give an order randomly 
-and help control the time used by each team member.
+# Pkiwhosnext
 
-Overview
-===
-The WhosNext application is written purely with HTML5 + TypeScript + AngularJS, following the best practices advised by Microsoft.
- 
-- Main UI
- 
-![Whos Next Main UI](https://raw.githubusercontent.com/daxnet/pkiwhosnext/master/other/whosnext1.png)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
 
-- Visual Studio Code
+## Development server
 
-![Visual Studio Code](https://raw.githubusercontent.com/daxnet/pkiwhosnext/master/other/whosnext2_vscode.png)
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Source Code
-===
-The source code is written in HTML5 + TypeScript + AngularJS, using Microsoft Visual Studio Code. To use VS Code to compile and play around the application, please make sure you have used the correct version of TypeScript. As Microsoft SDKs also provides an earlier version of TypeScript, compile the application against that version will not work.
+## Code scaffolding
 
-To change the tsc compiler, open the `task.json` file under `.vscode` folder, locate the following line, and change the `command` parameter:
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
-    {
-	"version": "0.1.0",
+## Build
 
-	// The command is tsc. Assumes that tsc has been installed using npm install -g typescript
-	"command": "<!-- *** CHANGE THIS ACCORDINGLY *** -->",
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-	// The command is a shell script
-	"isShellCommand": true,
+## Running unit tests
 
-	// Show the output window only if unrecognized errors occur.
-	"showOutput": "silent",
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-	// Tell the tsc compiler to use the tsconfig.json from the open folder.
-	"args": ["-p", "."],
+## Running end-to-end tests
 
-	// use the standard tsc problem matcher to find compile problems
-	// in the output.
-	"problemMatcher": "$tsc"
-	}
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Before running the tests make sure you are serving the app via `ng serve`.
 
-In order to protect the staff's privacy, employee avatars are not included in this repository. For PerkinElmer staffs who want to study the source code and compile and play around, please download the avatars from ``\\shadev308\Sharing\People\sunnychen\pkiwhosnext\images.zip``, and extract all the files and put it to the root folder of this application. After that, you can open the `index.html` to start the application.
+## Further help
 
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

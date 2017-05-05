@@ -1,0 +1,16 @@
+.card-header {
+    background-color: #aaa;
+    border-color: #999;
+}
+
+.card-header h2 {
+    color: #fff;
+    font-size: x-large;
+}
+
+.card-header sub {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #eee;
+    font-size: large;
+    font-weight: bold;
+}

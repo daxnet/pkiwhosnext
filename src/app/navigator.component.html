@@ -1,0 +1,18 @@
+<div>
+    <div class="btn-group btn-group-md float-left" role="group" aria-label="">
+        <button type="button" class="btn btn-danger btn-action" [disabled]='started' (click)='onReset()' title="Reset the game.">
+            <span class="fa fa-refresh"></span>
+        </button>
+    </div>
+    <div class="btn-group btn-group-md float-right" role="group" aria-label="actions">
+        <button type="button" class="btn btn-primary btn-action" [disabled]='currentIdx === 0' (click)='onPrevious()'>
+                <span class="fa fa-step-backward"></span>
+        </button>
+        <button type="button" class="btn btn-success btn-action" (click)='onToggleAppStatus()'>
+                <span class="fa" [class.fa-pause]='started' [class.fa-play]='!started'></span>
+        </button>
+        <button type="button" class="btn btn-primary btn-action" [disabled]='currentIdx === total - 1' (click)='onNext()'>
+                <span class="fa fa-step-forward"></span>
+        </button>
+    </div>
+</div>
