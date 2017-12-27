@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-header">
+    TIMING
+  </div>
+  <div class="card-body">
+    <div class="row" style="margin: 0.5em;">
+      <div class="col-md-4 progress-label">
+        Current:
+      </div>
+      <div class="col-md-8 text-left">
+        {{currentIndex + 1}} of {{totalCount}}
+      </div>
+    </div>
+    <div class="row" style="margin: 0.5em;">
+      <div class="col-md-12">
+        <div class="progress" style="height: 2rem;">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" 
+            [class.bg-info]="(remainingSeconds/totalSeconds)*100 > 25" 
+            [class.bg-danger]="(remainingSeconds/totalSeconds)*100 <= 25" 
+            role="progressbar" 
+            [attr.aria-valuenow]="remainingSeconds" 
+            aria-valuemin="0"
+            [attr.aria-valuemax]="totalSeconds" 
+            style="height: 2rem;" 
+            [style.width]="(remainingSeconds/totalSeconds)*100 + '%'">
+            <span style="font-size: large;">{{remainingSeconds}}"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
