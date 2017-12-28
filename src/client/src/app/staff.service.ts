@@ -1,12 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Staff} from './staff';
 
+
 @Injectable()
 export class StaffService {
+
+    private headers = new Headers( { 'Content-Type': 'application/json' } );
+
     getStaffs(): Staff[] {
         // tslint:disable-next-line:no-use-before-declare
         return STAFFS;
     }
+
+
 }
 
 const STAFFS: Staff[] = [

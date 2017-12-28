@@ -24,7 +24,7 @@ namespace WeShare.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync() => Ok(await this.dao.GetAllAsync<Staff>());
+        public async Task<IActionResult> GetAllAsync() => Ok(await this.dao.FindBySpecificationAsync<Staff>(s => s.IsActive));
 
         [HttpGet]
         [Route("{id}")]
@@ -41,8 +41,10 @@ namespace WeShare.Service.Controllers
 
         [HttpGet]
         [Route("randomize")]
-        public async Task<IActionResult> GetRandomizedAsync() 
-            => Ok((await this.dao.GetAllAsync<Staff>()).RandomizeOrder().Select((x, i) => new { index = i, id = x.Id }));
+        public async Task<IActionResult> GetRandomizedAsync()
+            => Ok((await this.dao.FindBySpecificationAsync<Staff>(s => s.IsActive))
+                .RandomizeOrder()
+                .Select((x, i) => new { index = i, id = x.Id }));
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] dynamic model)
