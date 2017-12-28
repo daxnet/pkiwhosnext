@@ -39,6 +39,11 @@ namespace WeShare.Service.Controllers
             return Ok(entity);
         }
 
+        [HttpGet]
+        [Route("randomize")]
+        public async Task<IActionResult> GetRandomizedAsync() 
+            => Ok((await this.dao.GetAllAsync<Staff>()).RandomizeOrder().Select((x, i) => new { index = i, id = x.Id }));
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] dynamic model)
         {
