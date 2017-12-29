@@ -64,6 +64,11 @@ namespace WeShare.Service
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WeShare API");
             });
 
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseMvc();
         }
     }

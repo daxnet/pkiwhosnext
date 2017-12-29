@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Staff } from './staff';
-import { StaffService, EmptyStaff } from './staff.service';
+import { Staff, StaffId, EmptyStaffId } from './staff';
+import { StaffService } from './staff.service';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -11,9 +11,9 @@ import { environment } from '../environments/environment';
 })
 
 export class AppComponent implements OnInit {
-  private allStaffs: Staff[] = new Array();
-  private selectedStaff: Staff;
-  private nextStaff: Staff;
+  private staffIdList: StaffId[] = new Array();
+  private selectedStaffId: StaffId;
+  private nextStaffId: StaffId;
   private curIdx: number;
   private remainingSeconds: number;
   private started: boolean;
@@ -23,36 +23,24 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialize();
-  }
-
-  initialize(): void {
     this.getStaffs();
-    this.curIdx = 0;
-    this.started = false;
-    this.bindCurrent(this.curIdx);
-    this.remainingSeconds = environment.timing;
-    clearTimeout(this.timerHandler);
   }
 
   getStaffs(): void {
-    var staffs = this.staffService.getStaffs();
-    console.log(staffs.length);
-    var idxArray = [];
-    for (var i = 0; i < staffs.length; i++) {
-      var calculatedIdx = Math.floor(Math.random() * staffs.length);
-      while (idxArray.indexOf(calculatedIdx) >= 0) {
-        calculatedIdx = Math.floor(Math.random() * staffs.length);
-      }
-      idxArray[i] = calculatedIdx;
-    }
-    for (var i = 0; i < idxArray.length; i++) {
-      this.allStaffs[i] = staffs[idxArray[i]];
-    }
+    this.staffService
+      .getRandomizedIdList()
+      .then(response => {
+        this.staffIdList = response;
+        this.curIdx = 0;
+        this.started = false;
+        this.bindCurrent(this.curIdx);
+        this.remainingSeconds = environment.timing;
+        clearTimeout(this.timerHandler);
+      });
   }
 
   onSelectIndexChanged(idx: number): void {
-    console.log("onSelectIndexChanged");
+    console.log('onSelectIndexChanged');
     this.curIdx = idx;
     this.remainingSeconds = environment.timing;
     this.bindCurrent(idx);
@@ -66,9 +54,9 @@ export class AppComponent implements OnInit {
         if (this.remainingSeconds === 0) {
           this.remainingSeconds = environment.timing;
           this.curIdx++;
-          if (this.curIdx === this.allStaffs.length) {
+          if (this.curIdx === this.staffIdList.length) {
             alert('No one else!');
-            this.initialize();
+            this.getStaffs();
           } else {
             this.bindCurrent(this.curIdx);
           }
@@ -80,12 +68,14 @@ export class AppComponent implements OnInit {
   }
 
   onResetRequested(): void {
-    this.initialize();
+    this.getStaffs();
   }
 
   private bindCurrent(idx: number): void {
-    this.selectedStaff = this.allStaffs[idx];
-    this.nextStaff = idx === this.allStaffs.length - 1 ?
-      EmptyStaff : this.allStaffs[idx + 1];
+    this.selectedStaffId = this.staffIdList[idx];
+    this.nextStaffId = idx === this.staffIdList.length - 1 ?
+      EmptyStaffId : this.staffIdList[idx + 1];
+
+    console.log(this.selectedStaffId);
   }
 }
