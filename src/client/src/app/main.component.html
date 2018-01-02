@@ -1,0 +1,32 @@
+<div *ngIf='staffIdList.length > 0' class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-12">
+            <current-staff [staffId]="selectedStaffId"></current-staff>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-12">
+            <next-staff [staffId]="nextStaffId"></next-staff>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <progress-indicator [currentIndex]="curIdx" [remainingSeconds]="remainingSeconds" [totalCount]='staffIdList.length'>Loading progress indicator...</progress-indicator>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <navigator [currentIdx]="curIdx" [total]="staffIdList.length" [started]="started" (onSelectIndexChanged)='onSelectIndexChanged($event)'
+              (onAppStatusChanged)='onAppStatusChanged($event)' (onResetRequested)='onResetRequested()'>
+            </navigator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

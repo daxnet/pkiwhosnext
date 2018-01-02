@@ -1,33 +1,90 @@
-<div *ngIf='staffIdList.length > 0' class="row">
-  <div class="col-md-12">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="row">
-          <div class="col-md-12">
-            <current-staff [staffId]="selectedStaffId"></current-staff>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-12">
-            <next-staff [staffId]="nextStaffId"></next-staff>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <progress-indicator [currentIndex]="curIdx" [remainingSeconds]="remainingSeconds" 
-                [totalCount]='staffIdList.length'>Loading progress indicator...</progress-indicator>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <navigator [currentIdx]="curIdx" [total]="staffIdList.length" [started]="started" (onSelectIndexChanged)='onSelectIndexChanged($event)'
-              (onAppStatusChanged)='onAppStatusChanged($event)' (onResetRequested)='onResetRequested()'>
-            </navigator>
-          </div>
-        </div>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="/assets/weshare.png" width="28" height="28" class="d-inline-block align-top brand-icon" alt="WeShare">WESHARE
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li *ngIf='!userId' class="nav-item active">
+              <a class="nav-link" href="login">Sign In</a>
+            </li>
+
+            <li *ngIf='userId' class="nav-item active dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Welcome!
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Edit My Profile</a>
+                <a class="dropdown-item" href="#">Sign Out</a>
+              </div>
+            </li>
+          </ul>
+      <!-- <span *ngIf='!userId' class="navbar-text">
+        <ul class="nav navbar-nav">
+          <li>
+              <a class="nav-link" href="#">Welcome!</a>
+          </li>
+          <li>
+              <a class="nav-link" href="#">Sign Out</a>
+          </li>
+        </ul>
+         
+          
+        </span> -->
+      <!-- <div class="collapse navbar-collapse" id="navbar-menus">
+        <ul *ngIf='userId' class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              <span class="fa fa-user"></span>&nbsp; Welcome, {{currentUserName}}!
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="#">Edit my profile</a>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li>
+                <a href="javascript:void(0)" (click)='logout()'>Sign out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        
+      </div> -->
+
     </div>
   </div>
+</nav>
+<!--
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a class="navbar-brand" href="#">
+      Who's Next?
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  -->
+<div class="container">
+  <router-outlet></router-outlet>
 </div>
+<footer>
+  <hr/>
+  <div class="text-center footer-text">
+    Copyright &copy; 2017 PerkinElmer Informatics R&D, all rights reserved.
+  </div>
+</footer>

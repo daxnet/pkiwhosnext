@@ -6,6 +6,8 @@ using WeShare.Service.DataAccess;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
+using WeShare.Service.Security;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WeShare.Service
 {
@@ -45,6 +47,28 @@ namespace WeShare.Service
                 }
             });
 
+            // Authentication
+            services.AddAuthentication().AddBasicAuthentication();
+
+            // Authorization
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(BasicAuthenticationExtension.Scheme);
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new AdministratorRequirement());
+                });
+
+                options.AddPolicy("RegularUser", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(BasicAuthenticationExtension.Scheme);
+                    policy.RequireAuthenticatedUser();
+                });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, AdministratorRequirementHandler>();
+
             // Application Services
             services.AddSingleton<IDataAccessObject>(serviceProvider => new MongoDataAccessObject("WeShare"));
         }
@@ -68,6 +92,8 @@ namespace WeShare.Service
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }

@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   timing: 60,
-  serviceBaseUri: 'http://localhost:57631/api'
+  serviceBaseUri: 'http://localhost:57265/api'
 };

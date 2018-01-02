@@ -31,13 +31,20 @@ namespace WeShare.Service.DataAccess
 
         public async Task<TEntity> GetByIdAsync<TEntity>(Guid id) where TEntity : IEntity => (await FindBySpecificationAsync<TEntity>(x => x.Id.Equals(id))).FirstOrDefault();
 
-        public Task UpdateByIdAsync<TEntity>(Guid id, TEntity entity) where TEntity : IEntity
+        public async Task UpdateByIdAsync<TEntity>(Guid id, TEntity entity) where TEntity : IEntity
         {
-            throw new NotImplementedException();
+            var filterDefinition = Builders<TEntity>.Filter.Eq(x => x.Id, id);
+            await GetCollection<TEntity>().ReplaceOneAsync(filterDefinition, entity);
         }
 
         public async Task<IEnumerable<TEntity>> FindBySpecificationAsync<TEntity>(Expression<Func<TEntity, bool>> expr) where TEntity : IEntity
             => await (await GetCollection<TEntity>().FindAsync(expr)).ToListAsync();
+
+        public async Task DeleteByIdAsync<TEntity>(Guid id) where TEntity : IEntity
+        {
+            var filterDefinition = Builders<TEntity>.Filter.Eq(x => x.Id, id);
+            await GetCollection<TEntity>().DeleteOneAsync(filterDefinition);
+        }
 
         private IMongoCollection<TEntity> GetCollection<TEntity>() where TEntity : IEntity => this.database.GetCollection<TEntity>(typeof(TEntity).Name);
 
@@ -75,7 +82,6 @@ namespace WeShare.Service.DataAccess
             // GC.SuppressFinalize(this);
         }
 
-        
         #endregion
     }
 }

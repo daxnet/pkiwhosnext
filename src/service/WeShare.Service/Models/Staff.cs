@@ -21,7 +21,11 @@ namespace WeShare.Service.Models
 
         public DateTime? DateModified { get; set; }
 
+        public DateTime? DateLastLogin { get; set; }
+
         public bool IsActive { get; set; }
+
+        public bool? IsAdmin { get; set; }
 
         public string AvatarBase64 { get; set; }
 

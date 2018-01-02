@@ -8,6 +8,14 @@ import { CurrentStaffComponent } from './current-staff.component';
 import { NextStaffComponent } from './next-staff.component';
 import { NavigatorComponent } from './navigator.component';
 import { ProgressComponent } from './progress.component';
+import { LoginComponent } from './login.component';
+import { ProfileComponent } from './profile.component';
+
+import { Routing } from './app.routing';
+import { AuthGuard } from 'app/auth.guard';
+import { StaffService } from 'app/staff.service';
+import { GlobalEventsManagerService } from 'app/global-events-manager.service';
+import { MainComponent } from './main.component';
 
 @NgModule({
   declarations: [
@@ -15,14 +23,22 @@ import { ProgressComponent } from './progress.component';
     CurrentStaffComponent,
     NextStaffComponent,
     NavigatorComponent,
-    ProgressComponent
+    ProgressComponent,
+    LoginComponent,
+    ProfileComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    Routing
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    StaffService,
+    GlobalEventsManagerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

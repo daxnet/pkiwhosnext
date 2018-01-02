@@ -11,7 +11,38 @@ import { environment } from '../environments/environment';
 @Injectable()
 export class StaffService {
 
-    constructor(private http: Http) { }
+    public userId: string;
+    public token: string;
+    public userName: string;
+
+    constructor(private http: Http) {
+        this.userId = localStorage.getItem('weshare.userId');
+        this.token = localStorage.getItem('weshare.token');
+        this.userName = localStorage.getItem('weshare.userName');
+    }
+
+    login(userName: string, password: string): Promise<boolean> {
+        return this.http.post(`${environment.serviceBaseUri}/staffs/authenticate`,
+            JSON.stringify({ userName: userName, password: password}))
+            .toPromise()
+            .then(response => {
+                if (response.status === 200) {
+                    const data = response.json();
+                    localStorage.setItem('weshare.userId', data.id);
+                    localStorage.setItem('weshare.token', data.token);
+                    localStorage.setItem('weshare.userName', data.userName);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+    }
+
+    logout(): void {
+        localStorage.removeItem('weshare.userId');
+        localStorage.removeItem('weshare.token');
+        localStorage.removeItem('weshare.userName');
+    }
 
     getRandomizedIdList(): Promise<StaffId[]> {
         const url = `${environment.serviceBaseUri}/staffs/randomize`;
