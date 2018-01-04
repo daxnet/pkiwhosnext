@@ -12,7 +12,8 @@ import { GlobalEventsManagerService } from 'app/global-events-manager.service';
 })
 export class MainComponent implements OnInit {
 
-  private staffIdList: StaffId[] = new Array();
+  staffIdList: StaffId[] = new Array();
+
   private selectedStaffId: StaffId;
   private nextStaffId: StaffId;
   private curIdx: number;

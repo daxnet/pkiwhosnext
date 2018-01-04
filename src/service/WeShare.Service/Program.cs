@@ -20,6 +20,7 @@ namespace WeShare.Service
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://*:9023")
                 .Build();
     }
 }

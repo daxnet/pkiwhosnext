@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WeShare.Service.DataAccess;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.IO;
+using WeShare.Service.DataAccess;
 using WeShare.Service.Security;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WeShare.Service
 {
@@ -23,6 +24,11 @@ namespace WeShare.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configuration
+            var mongoServer = Configuration["mongo:server"];
+            var mongoDatabase = Configuration["mongo:database"];
+            var mongoPort = Convert.ToInt32(Configuration["mongo:port"]);
+
             // MVC
             services.AddMvc();
 
@@ -70,7 +76,7 @@ namespace WeShare.Service
             services.AddSingleton<IAuthorizationHandler, AdministratorRequirementHandler>();
 
             // Application Services
-            services.AddSingleton<IDataAccessObject>(serviceProvider => new MongoDataAccessObject("WeShare"));
+            services.AddSingleton<IDataAccessObject>(serviceProvider => new MongoDataAccessObject(mongoDatabase, mongoServer, mongoPort));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

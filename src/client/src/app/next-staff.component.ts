@@ -19,7 +19,7 @@ export class NextStaffComponent {
             });
     }
 
-    private staff: Staff;
+    staff: Staff;
 
     constructor(private service: StaffService,
         private domSanitizer: DomSanitizer) {
