@@ -6,5 +6,8 @@ mkdir publish/wwwroot
 cd src/client
 npm install
 ng build -prod --output-path ../../publish/wwwroot
+docker build -t daxnet/weshare:latest -t daxnet/weshare:$1 .
+docker push daxnet/weshare:latest
+docker push daxnet/weshare:$1
 
 
