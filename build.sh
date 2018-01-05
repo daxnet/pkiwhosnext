@@ -1,0 +1,10 @@
+#!/bin/sh
+cd src/service/WeShare.Service
+dotnet publish -o ../../../publish -c Release -r linux-x64
+cd ../../..
+mkdir publish/wwwroot
+cd src/client
+npm install
+ng build -prod --output-path ../../publish/wwwroot
+
+
