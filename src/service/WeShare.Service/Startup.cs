@@ -104,7 +104,10 @@ namespace WeShare.Service
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
+            });
         }
     }
 }
