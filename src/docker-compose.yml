@@ -1,0 +1,19 @@
+version: "3"
+services:
+  db:
+    image: mongo
+    container_name: mongo
+  
+  service:
+    image: daxnet/weshareservice
+    links:
+      - db
+    depends_on:
+      - db
+    ports:
+      - 9023:9023
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:9023
+    container_name: weshareservice
+

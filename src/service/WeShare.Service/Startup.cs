@@ -87,9 +87,6 @@ namespace WeShare.Service
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
