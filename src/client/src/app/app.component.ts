@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
       this.eventsManager.updateUserIdEmitter.subscribe(updatedUserId => {
         if (updatedUserId !== null) {
           this.userId = updatedUserId;
+          console.log('gem: ' + this.userId);
         }
       });
 

@@ -42,7 +42,6 @@ export class MainComponent implements OnInit {
   }
 
   onSelectIndexChanged(idx: number): void {
-    console.log('onSelectIndexChanged');
     this.curIdx = idx;
     this.remainingSeconds = environment.timing;
     this.bindCurrent(idx);
@@ -77,8 +76,6 @@ export class MainComponent implements OnInit {
     this.selectedStaffId = this.staffIdList[idx];
     this.nextStaffId = idx === this.staffIdList.length - 1 ?
       EmptyStaffId : this.staffIdList[idx + 1];
-
-    console.log(this.selectedStaffId);
   }
 
 }

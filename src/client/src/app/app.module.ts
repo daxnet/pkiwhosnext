@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { DxTooltipModule, DxTemplateModule } from 'devextreme-angular';
+
 import { AppComponent } from './app.component';
 import { CurrentStaffComponent } from './current-staff.component';
 import { NextStaffComponent } from './next-staff.component';
@@ -32,7 +34,9 @@ import { MainComponent } from './main.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    Routing
+    Routing,
+    DxTooltipModule,
+    DxTemplateModule
   ],
   providers: [
     AuthGuard,

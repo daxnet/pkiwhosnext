@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { Http, RequestOptions, Headers, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,25 +15,33 @@ export class StaffService {
     public token: string;
     public userName: string;
 
+    headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    options = new RequestOptions({ headers: this.headers });
+
+    /**
+     * Creates an instance of StaffService.
+     * @param {Http} http
+     * @memberof StaffService
+     */
     constructor(private http: Http) {
         this.userId = localStorage.getItem('weshare.userId');
         this.token = localStorage.getItem('weshare.token');
         this.userName = localStorage.getItem('weshare.userName');
     }
 
-    login(userName: string, password: string): Promise<boolean> {
+    login(userName: string, password: string): Promise<any> {
         return this.http.post(`${environment.serviceBaseUri}/staffs/authenticate`,
-            JSON.stringify({ userName: userName, password: password}))
+            JSON.stringify({ userName: userName, password: password}), this.options)
             .toPromise()
             .then(response => {
                 if (response.status === 200) {
                     const data = response.json();
                     localStorage.setItem('weshare.userId', data.id);
                     localStorage.setItem('weshare.token', data.token);
-                    localStorage.setItem('weshare.userName', data.userName);
-                    return true;
+                    localStorage.setItem('weshare.userName', data.name);
+                    return data;
                 } else {
-                    return false;
+                    return null;
                 }
             });
     }
@@ -61,7 +69,6 @@ export class StaffService {
             .toPromise()
             .then(response => {
                 const result = response.json();
-                console.log(result);
                 return new Staff(
                     result.id,
                     result.name,

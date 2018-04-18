@@ -3,88 +3,58 @@
     <a class="navbar-brand" href="#">
       <img src="/assets/weshare.png" width="28" height="28" class="d-inline-block align-top brand-icon" alt="WeShare">WESHARE
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li *ngIf='!userId' class="nav-item active">
-              <a class="nav-link" href="login">Sign In</a>
-            </li>
+    <ul *ngIf='!userId' class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="login"><span class="fa fa-sign-in"></span>&nbsp;Login</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="register"><span class="fa fa-user-plus"></span>&nbsp;Register</a>
+      </li>
+    </ul>
+    <ul *ngIf='userId' class="navbar-nav">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Welcome {{userName}} !
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="profile/{{userId}}">My profile</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)='logout()'>Sign out</a>
+          </div>
+      </li>
+    </ul>
 
-            <li *ngIf='userId' class="nav-item active dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Welcome!
+    <!-- <div class="collapse navbar-collapse form-inline" id="navbarSupportedContent">
+        <ul *ngIf='!userId' class="nav navbar-nav mr-auto">
+            <li>
+              <a href="login"><span class="fa fa-sign-in"></span>&nbsp;Sign in</a>
+            </li>
+        </ul>
+        <ul *ngIf='userId' class="nav navbar-nav mr-auto">
+            <li class="dropdown">
+              <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Welcome!<span class="caret"></span>
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Edit My Profile</a>
-                <a class="dropdown-item" href="#">Sign Out</a>
-              </div>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Edit my profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="javascript:void(0)" (click)='logout()'>Sign out</a></li>
+              </ul>
             </li>
           </ul>
-      <!-- <span *ngIf='!userId' class="navbar-text">
-        <ul class="nav navbar-nav">
-          <li>
-              <a class="nav-link" href="#">Welcome!</a>
-          </li>
-          <li>
-              <a class="nav-link" href="#">Sign Out</a>
-          </li>
-        </ul>
-         
-          
-        </span> -->
-      <!-- <div class="collapse navbar-collapse" id="navbar-menus">
-        <ul *ngIf='userId' class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              <span class="fa fa-user"></span>&nbsp; Welcome, {{currentUserName}}!
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="#">Edit my profile</a>
-              </li>
-              <li role="separator" class="divider"></li>
-              <li>
-                <a href="javascript:void(0)" (click)='logout()'>Sign out</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        
-      </div> -->
+    </div> -->
 
-    </div>
   </div>
 </nav>
-<!--
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a class="navbar-brand" href="#">
-      Who's Next?
-    </a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#"></a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  -->
 <div class="container">
   <router-outlet></router-outlet>
 </div>
 <footer>
   <hr/>
   <div class="text-center footer-text">
-    Copyright &copy; 2017 PerkinElmer Informatics R&D, all rights reserved.
+    Copyright &copy; 2018 PerkinElmer Informatics R&D, all rights reserved.
   </div>
 </footer>

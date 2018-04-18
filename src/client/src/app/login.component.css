@@ -1,5 +1,12 @@
 h2 {
-    color: gray;
+    color: lightgrey;
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.tooltip-error {
+  color: red;
+  font-weight: bold;
 }
 
 .ng-valid[required], .ng-valid.required  {
