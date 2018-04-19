@@ -137,6 +137,7 @@ namespace WeShare.Service.Controllers
 
         [HttpPost]
         [Route("authenticate")]
+        [Produces("application/json")]
         public async Task<IActionResult> Authenticate([FromBody] dynamic model)
         {
             var userName = (string)model.userName;
@@ -148,9 +149,13 @@ namespace WeShare.Service.Controllers
             }
 
             var entity = (await this.dao.FindBySpecificationAsync<Staff>(x => 
-                x.UserName.Equals(userName) && 
-                x.Password.Equals(password))).FirstOrDefault();
+                x.UserName.Equals(userName))).FirstOrDefault();
             if (entity == null)
+            {
+                return NotFound();
+            }
+
+            if (!entity.Password.Equals(password))
             {
                 return Unauthorized();
             }

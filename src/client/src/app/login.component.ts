@@ -45,14 +45,7 @@ export class LoginComponent implements OnInit {
           }
         })
         .catch(err => {
-          switch (err.status) {
-            case 404:
-              // this.dialogService.showError('User does not exist.', 'LOGIN FAILED');
-              break;
-            case 401:
-              // this.dialogService.showError('Password is incorrect.', 'LOGIN FAILED');
-              break;
-          }
+          console.log(err.message);
         });
     }
   }

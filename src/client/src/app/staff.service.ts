@@ -43,6 +43,15 @@ export class StaffService {
                 } else {
                     return null;
                 }
+            })
+            .catch(err => {
+                switch (err.status) {
+                    case 404:
+                      throw Error('User does not exist.');
+                    case 401:
+                      // this.dialogService.showError('Password is incorrect.', 'LOGIN FAILED');
+                      throw Error('Password is incorrect.');
+                }
             });
     }
 
