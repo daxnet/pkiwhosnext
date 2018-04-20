@@ -18,6 +18,7 @@ import { AuthGuard } from 'app/auth.guard';
 import { StaffService } from 'app/staff.service';
 import { GlobalEventsManagerService } from 'app/global-events-manager.service';
 import { MainComponent } from './main.component';
+import { ChangePasswordComponent } from './change-password.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MainComponent } from './main.component';
     ProgressComponent,
     LoginComponent,
     ProfileComponent,
-    MainComponent
+    MainComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
