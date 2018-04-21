@@ -78,13 +78,17 @@ export class StaffService {
             .toPromise()
             .then(response => {
                 const result = response.json();
-                return new Staff(
-                    result.id,
-                    result.name,
-                    result.localName,
-                    result.avatarBase64
-                );
+                return new Staff(result.id, result.name, result.localName, result.email, result.avatarBase64);
             });
+    }
+
+    updateStaffById(id: StaffId, staff: Staff): Promise<any> {
+        const url = `${environment.serviceBaseUri}/staffs/${id.id}`;
+        const body = JSON.stringify([{
+            op: 'replace', path: '/AvatarBase64', value: staff.avatar
+        }]);
+        return this.http.patch(url, body, this.options)
+            .toPromise();
     }
 }
 

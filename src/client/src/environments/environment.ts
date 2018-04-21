@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   timing: 60,
+  maxAvatarSize: 180,
   serviceBaseUri: 'http://localhost:57778/api'
 };

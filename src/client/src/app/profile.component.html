@@ -1,4 +1,37 @@
-<p>
-  profile works!
-</p>
-<h1>{{staff.name}}</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{staff.name}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <img [src]="domSanitizer.bypassSecurityTrustUrl(staff.avatar)" class="img-fluid float-left d-block rounded" style="max-width: 100%; max-height: 100%;"
+        alt="{{staff.name}}" />
+
+    </div>
+    <div class="col-md-9">
+      <form id="form" #form>
+        <h3>Personal Information</h3>
+        <div class="dx-fieldset">
+          <div class="dx-field">
+            <div class="dx-field-label">Email Address:</div>
+            <dx-text-box class="dx-field-value" value="{{staff.email}}" readOnly="true"></dx-text-box>
+          </div>
+          <div class="dx-field">
+            <div class="dx-field-label">Localized Name:</div>
+            <dx-text-box class="dx-field-value" value="{{staff.name_cn}}" readOnly="true"></dx-text-box>
+          </div>
+        </div>
+          <div id="fileuploader-container">
+            <dx-file-uploader selectButtonText="Change Avatar" labelText="Click to change your avatar." accept="image/*" uploadMode="useForm" (onValueChanged)="onAvatarChanged($event)" [(value)]="newAvatarFiles">
+            </dx-file-uploader>
+          </div>
+        <dx-button id="button" text="Discard" type="danger" (onClick)="reload()">
+        </dx-button>
+        <dx-button id="button" text="Update" type="success" (onClick)="updateClick()" [disabled]="disableUpload">
+        </dx-button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { DxTooltipModule, DxTemplateModule } from 'devextreme-angular';
+import { DxTooltipModule, DxTemplateModule, DxFileUploaderModule, DxButtonModule, DxTextBoxModule } from 'devextreme-angular';
 
 import { AppComponent } from './app.component';
 import { CurrentStaffComponent } from './current-staff.component';
@@ -37,8 +37,11 @@ import { ChangePasswordComponent } from './change-password.component';
     FormsModule,
     HttpModule,
     Routing,
+    DxFileUploaderModule,
     DxTooltipModule,
-    DxTemplateModule
+    DxTemplateModule,
+    DxTextBoxModule,
+    DxButtonModule
   ],
   providers: [
     AuthGuard,
