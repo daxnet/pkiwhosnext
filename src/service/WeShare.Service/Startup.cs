@@ -105,6 +105,7 @@ namespace WeShare.Service
             //{
             //    routeBuilder.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
             //});
+            app.UseMvc();
         }
     }
 }

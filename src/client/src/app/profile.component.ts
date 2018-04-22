@@ -68,18 +68,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   updateClick() {
     this.disableUpload = true;
-    this.staffService.updateStaffById(new StaffId(this.staff.id), this.staff)
-    .then(response => {
-      notify({message: 'Profile updated successfully.',
-          maxWidth: '220px',
-          position: 'top'}, 'success', 3000);
-        this.newAvatarFiles = [];
-    })
-    .catch(err => {
-      notify({message: err.message,
-          maxWidth: '350px',
-          position: 'top'}, 'warning', 3000);
-      this.disableUpload = false;
-    });
+    this.staffService.updateStaff(this.staff)
+      .then(response => {
+        notify({message: 'Profile updated successfully.',
+            maxWidth: '350px',
+            position: 'top'}, 'success', 3000);
+          this.newAvatarFiles = [];
+      })
+      .catch(err => {
+        notify({message: err.message,
+            maxWidth: '350px',
+            position: 'top'}, 'warning', 3000);
+        this.disableUpload = false;
+      });
   }
 }

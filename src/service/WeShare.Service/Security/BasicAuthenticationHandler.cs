@@ -1,13 +1,30 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿// ============================================================================
+// __          ________  _____ _    _          _____  ______
+// \ \        / /  ____|/ ____| |  | |   /\   |  __ \|  ____|
+//  \ \  /\  / /| |__  | (___ | |__| |  /  \  | |__) | |__
+//   \ \/  \/ / |  __|  \___ \|  __  | / /\ \ |  _  /|  __|
+//    \  /\  /  | |____ ____) | |  | |/ ____ \| | \ \| |____
+//     \/  \/   |______|_____/|_|  |_/_/    \_\_|  \_\______|
+//
+// WeShare - A simple lottery application built for internal group meeting.
+//
+// Copyright (C) 2017-2018, PerkinElmer Inc. Informatics
+// All rights reserved.
+// Program by Sunny Chen (daxnet)
+//
+// ============================================================================
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using WeShare.Service.DataAccess;
+using WeShare.Service.Models;
 
 namespace WeShare.Service.Security
 {
@@ -24,36 +41,54 @@ namespace WeShare.Service.Security
             this.dao = dao;
         }
 
-        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            //var authorizationHeader = Context.Request.Headers["Authorization"];
-            //if (!authorizationHeader.Any())
-            //    return Task.FromResult(AuthenticateResult.NoResult());
+            var authorizationHeader = Context.Request.Headers["Authorization"];
+            if (!authorizationHeader.Any())
+            {
+                return AuthenticateResult.NoResult();
+            }
 
-            //var value = authorizationHeader.ToString();
-            //if (string.IsNullOrWhiteSpace(value))
-            //    return Task.FromResult(AuthenticateResult.NoResult());
+            var authorizationHeaderValue = authorizationHeader.ToString();
+            if (string.IsNullOrWhiteSpace(authorizationHeaderValue))
+            {
+                return AuthenticateResult.NoResult();
+            }
 
-            // place logic here to validate the header value (decrypt, call db etc)
+            var authorizationValue = Encoding.ASCII.GetString(
+                Convert.FromBase64String(
+                    authorizationHeaderValue.Substring(6, authorizationHeaderValue.Length - 6)));
 
-            var isAdministratorClaim = new Claim(BasicAuthenticationExtension.IsAdministrator, 
-                "true", 
-                ClaimValueTypes.Boolean, 
+            var userName = authorizationValue.Substring(0, authorizationValue.IndexOf(':'));
+            var password = authorizationValue.Substring(authorizationValue.IndexOf(':') + 1,
+                authorizationValue.Length - authorizationValue.IndexOf(':') - 1);
+            var encryptedPassword = Utils.EncryptPassword(userName, password);
+
+            var staff = (await this.dao.FindBySpecificationAsync<Staff>(x => x.UserName == userName && x.Password == encryptedPassword)).FirstOrDefault();
+            if (staff == null)
+            {
+                return AuthenticateResult.NoResult();
+            }
+
+            var isAdministratorClaim = new Claim(BasicAuthenticationExtension.IsAdministrator,
+                (staff.IsAdmin ?? false).ToString(),
+                ClaimValueTypes.Boolean,
                 BasicAuthenticationExtension.DefaultIssuer);
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, "Bob"),
-                //isAdministratorClaim,
+                new Claim(ClaimTypes.NameIdentifier, staff.Id.ToString()),
+                new Claim(ClaimTypes.Name, staff.UserName),
+                isAdministratorClaim
             };
 
-            // create a new claims identity and return an AuthenticationTicket 
+            // create a new claims identity and return an AuthenticationTicket
             // with the correct scheme
             var claimsIdentity = new ClaimsIdentity(claims, BasicAuthenticationExtension.Scheme);
 
             var ticket = new AuthenticationTicket(new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties(), BasicAuthenticationExtension.Scheme);
 
-            return Task.FromResult(AuthenticateResult.Success(ticket));
+            return AuthenticateResult.Success(ticket);
         }
     }
 }
