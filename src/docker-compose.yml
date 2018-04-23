@@ -12,8 +12,14 @@ services:
       - db
     ports:
       - 9023:9023
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://*:9023
     container_name: weshareservice
 
+  web:
+    image: daxnet/weshareweb
+    links:
+      - service
+    depends_on:
+      - service
+    ports:
+      - 9080:80
+    container_name: weshareweb
