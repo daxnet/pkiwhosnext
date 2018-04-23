@@ -75,6 +75,8 @@ namespace WeShare.Service.Controllers
                 return Unauthorized();
             }
 
+            logger.LogInformation($"'{userName}' authenticated successfully.");
+
             return Ok(new
             {
                 id = entity.Id,
@@ -115,6 +117,8 @@ namespace WeShare.Service.Controllers
 
             staff.Password = Utils.EncryptPassword(userName, newPassword);
             await this.dao.UpdateByIdAsync(staff.Id, staff);
+
+            logger.LogInformation($"'{userName}' has changed the password.");
 
             return NoContent();
         }
@@ -167,6 +171,8 @@ namespace WeShare.Service.Controllers
 
             await this.dao.AddAsync(staff);
 
+            logger.LogInformation($"User '{userName}' created successfully.");
+
             return Created(Url.Action("GetByIdAsync", new { id = staff.Id }), staff.Id);
         }
 
@@ -174,13 +180,15 @@ namespace WeShare.Service.Controllers
         [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var instance = (await this.dao.FindBySpecificationAsync<Staff>(x => x.Id.Equals(id))).FirstOrDefault();
-            if (instance == null)
+            var staff = (await this.dao.FindBySpecificationAsync<Staff>(x => x.Id.Equals(id))).FirstOrDefault();
+            if (staff == null)
             {
                 return NotFound();
             }
 
             await this.dao.DeleteByIdAsync<Staff>(id);
+
+            logger.LogInformation($"User '{staff.UserName}' deleted successfully.");
 
             return NoContent();
         }
@@ -226,6 +234,8 @@ namespace WeShare.Service.Controllers
             }
 
             await this.dao.UpdateByIdAsync(staff.Id, staff);
+
+            logger.LogInformation($"'{userName}' has been updated successfully.");
 
             return NoContent();
         }

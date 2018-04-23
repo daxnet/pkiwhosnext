@@ -25,6 +25,20 @@ namespace WeShare.Service
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    var path = hostingContext.Configuration["LOG_PATH"];
+                    if (string.IsNullOrEmpty(path))
+                    {
+                        path = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location), "log");
+                    }
+
+                    var logFile = Path.Combine(path, "weshare.log");
+                    
+                    // TODO: Uncomment the following line to enable file logging.
+                    // logging.AddFile(logFile);
+                    logging.AddConsole();
+                })
                 .UseStartup<Startup>()
                 .Build();
         }

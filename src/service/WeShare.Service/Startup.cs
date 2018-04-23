@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -14,9 +15,12 @@ namespace WeShare.Service
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            this.logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -80,8 +84,13 @@ namespace WeShare.Service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
         {
+            appLifetime.ApplicationStarted.Register(() =>
+            {
+                this.logger.LogInformation("WeShare Application started.");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,10 +110,6 @@ namespace WeShare.Service
 
             app.UseAuthentication();
 
-            //app.UseMvc(routeBuilder =>
-            //{
-            //    routeBuilder.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
-            //});
             app.UseMvc();
         }
     }

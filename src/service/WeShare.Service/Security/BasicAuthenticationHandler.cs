@@ -28,10 +28,28 @@ using WeShare.Service.Models;
 
 namespace WeShare.Service.Security
 {
+    /// <summary>
+    /// Represents the authentication handler which handles the Basic authentication scheme.
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Authentication.AuthenticationHandler{WeShare.Service.Security.BasicAuthenticationSchemeOptions}" />
     public class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthenticationSchemeOptions>
     {
+        #region Private Fields
+
         private readonly IDataAccessObject dao;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasicAuthenticationHandler"/> class.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="encoder">The encoder.</param>
+        /// <param name="dao">The data access object which provides the data access operations.</param>
+        /// <param name="clock">The system clock.</param>
         public BasicAuthenticationHandler(IOptionsMonitor<BasicAuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
@@ -40,6 +58,10 @@ namespace WeShare.Service.Security
         {
             this.dao = dao;
         }
+
+        #endregion Public Constructors
+
+        #region Protected Methods
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
@@ -90,5 +112,7 @@ namespace WeShare.Service.Security
 
             return AuthenticateResult.Success(ticket);
         }
+
+        #endregion Protected Methods
     }
 }
