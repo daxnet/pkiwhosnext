@@ -16,15 +16,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private subscriber: Subscription;
   private userId: string;
-  private staff: Staff = EmptyStaff;
-  private disableUpload = true;
 
+  disableUpload = true;
+  staff: Staff = EmptyStaff;
   newAvatarFiles: any[] = [];
   newAvatarDataUri: string;
 
   constructor(private staffService: StaffService,
     private route: ActivatedRoute,
-    private domSanitizer: DomSanitizer) { }
+    public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.subscriber = this.route.params.subscribe(params => {

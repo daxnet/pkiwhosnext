@@ -15,19 +15,19 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   private subscriber: Subscription;
   private userId: string;
-  private staff: Staff = EmptyStaff;
-  private oldPassword: string;
-  private newPassword: string;
-  private confirmPassword: string;
 
-  private oldPasswordTooltipVisible: boolean;
-  private newPasswordTooltipVisible: boolean;
-  private confirmPasswordTooltipVisible: boolean;
-  private confirmPasswordTooltipText: string;
+  staff: Staff = EmptyStaff;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  oldPasswordTooltipVisible: boolean;
+  newPasswordTooltipVisible: boolean;
+  confirmPasswordTooltipVisible: boolean;
+  confirmPasswordTooltipText: string;
 
   constructor(private staffService: StaffService,
     private route: ActivatedRoute,
-    private domSanitizer: DomSanitizer) { }
+    public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.subscriber = this.route.params.subscribe(params => {
