@@ -28,6 +28,10 @@ using WeShare.Service.Models;
 
 namespace WeShare.Service.Controllers
 {
+    /// <summary>
+    /// Represents the controller for staff operations.
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class StaffsController : Controller
@@ -133,7 +137,7 @@ namespace WeShare.Service.Controllers
             var userName = (string)model.userName;
             var password = (string)model.password;
             var avatarBase64 = (string)model.avatarBase64;
-            var isAdmin = (bool)model.isAdmin;
+            var isAdmin = (bool?)model.isAdmin;
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(localName) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(avatarBase64))
             {
@@ -176,7 +180,7 @@ namespace WeShare.Service.Controllers
             return Created(Url.Action("GetByIdAsync", new { id = staff.Id }), staff.Id);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(Guid id)
         {
