@@ -49,7 +49,7 @@ export class StaffService {
 
     /**
      * Login the user credential with the given user name and password.
-     * 
+     *
      * @param {string} userName The name of the user.
      * @param {string} password The password of the user that is going to login.
      * @returns {Promise<any>} The login result.
@@ -62,7 +62,7 @@ export class StaffService {
 
         // Calls RESTful API for authentication.
         return this.http.post(`${environment.serviceBaseUri}/staffs/authenticate`,
-            JSON.stringify({ userName: userName, password: password}), options)
+            JSON.stringify({ userName: userName, password: password }), options)
             .toPromise()
             .then(response => {
                 if (response.status === 200) {
@@ -82,16 +82,16 @@ export class StaffService {
             .catch(err => {
                 switch (err.status) {
                     case 404:
-                      throw Error('User does not exist.');
+                        throw Error('User does not exist.');
                     case 401:
-                      throw Error('Password is incorrect.');
+                        throw Error('Password is incorrect.');
                 }
             });
     }
 
     /**
      * Logout the current user.
-     * 
+     *
      * @memberof StaffService
      */
     logout(): void {
@@ -100,6 +100,12 @@ export class StaffService {
         localStorage.removeItem('weshare.userName');
     }
 
+    /**
+     * Retrieves the randomized list of the staff Id.
+     *
+     * @returns {Promise<StaffId[]>} The randomized list of the staff Id.
+     * @memberof StaffService
+     */
     getRandomizedIdList(): Promise<StaffId[]> {
         const url = `${environment.serviceBaseUri}/staffs/disorganize`;
         return this.http.get(url)
@@ -107,6 +113,13 @@ export class StaffService {
             .then(response => response.json());
     }
 
+    /**
+     * Gets the staff information by using its ID.
+     *
+     * @param {StaffId} id The ID of the staff.
+     * @returns {Promise<Staff>} The staff information.
+     * @memberof StaffService
+     */
     getStaffById(id: StaffId): Promise<Staff> {
         if (id === EmptyStaffId) {
             return Promise.resolve(EmptyStaff);
@@ -121,6 +134,13 @@ export class StaffService {
             });
     }
 
+    /**
+     * Updates the staff by using the given data.
+     *
+     * @param {Staff} staff to be updated.
+     * @returns {Promise<any>} Update result.
+     * @memberof StaffService
+     */
     updateStaff(staff: Staff): Promise<any> {
         const url = `${environment.serviceBaseUri}/staffs`;
         const body = JSON.stringify([{
@@ -129,7 +149,8 @@ export class StaffService {
         const headers = new Headers({
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Basic ${this.token}` });
+            'Authorization': `Basic ${this.token}`
+        });
         const options = new RequestOptions({ headers: headers });
 
         return this.http.patch(url, body, options)
@@ -142,13 +163,22 @@ export class StaffService {
             });
     }
 
+    /**
+     * Changes the password for the current staff.
+     *
+     * @param {string} oldPassword The original password.
+     * @param {string} newPassword The new password.
+     * @returns {Promise<any>} The password changing result.
+     * @memberof StaffService
+     */
     changePassword(oldPassword: string, newPassword: string): Promise<any> {
         const url = `${environment.serviceBaseUri}/staffs/pwd/change`;
-        const body = JSON.stringify({oldPassword, newPassword});
+        const body = JSON.stringify({ oldPassword, newPassword });
         const headers = new Headers({
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Basic ${this.token}` });
+            'Authorization': `Basic ${this.token}`
+        });
         const options = new RequestOptions({ headers: headers });
 
         return this.http.post(url, body, options)
@@ -167,6 +197,3 @@ export class StaffService {
             });
     }
 }
-
-
-

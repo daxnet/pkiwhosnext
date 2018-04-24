@@ -3,7 +3,7 @@ services:
   db:
     image: mongo
     volumes:
-	    - ${MONGODB_VOLUME}
+      - ${MONGODB_VOLUME}
     container_name: mongo
   
   service:
