@@ -4,6 +4,8 @@ services:
     image: mongo
     volumes:
       - ${MONGODB_VOLUME}
+    ports:
+      - 27018:27017
     container_name: mongo
   
   service:
