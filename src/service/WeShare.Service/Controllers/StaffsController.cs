@@ -45,6 +45,11 @@ namespace WeShare.Service.Controllers
 
         #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StaffsController"/> class.
+        /// </summary>
+        /// <param name="dao">The Data Access Object for accessing the entities in a persistence store.</param>
+        /// <param name="logger">The logger which logs the application execution information.</param>
         public StaffsController(IDataAccessObject dao, ILogger<StaffsController> logger)
         {
             this.dao = dao;
@@ -55,6 +60,23 @@ namespace WeShare.Service.Controllers
 
         #region Public Methods
 
+        /// <summary>
+        /// Performs the authentication on a given authentication model.
+        /// </summary>
+        /// <param name="model">The authentication model which contains the userName and password.</param>
+        /// <returns>
+        /// The task which executes the authentication process.
+        /// </returns>
+        /// <response code="200">
+        ///     Authentication was successful. And the response body would contain
+        ///     the authenticated staff Id, name and the authentication token.
+        /// </response>
+        /// <response code="404">
+        ///     The specified user doesn't exist.
+        /// </response>
+        /// <response code="401">
+        ///     The password is incorrect, authentication failed.
+        /// </response>
         [HttpPost]
         [Route("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] dynamic model)
