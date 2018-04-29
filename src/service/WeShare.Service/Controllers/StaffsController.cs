@@ -111,6 +111,26 @@ namespace WeShare.Service.Controllers
             });
         }
 
+        /// <summary>
+        /// Changes the password for the current login staff.
+        /// </summary>
+        /// <param name="model">The model which contains both oldPassword and newPassword fields.</param>
+        /// <returns>The task which performs the password changing operation.</returns>
+        /// <remarks>
+        ///     This API requires the staff to be authenticated, or else the permission will be denied.
+        /// </remarks>
+        /// <response code="401">
+        ///     The use hasn't login or the provided oldPassword is incorrect.
+        /// </response>
+        /// <response code="400">
+        ///     Neither oldPassword nor newPassword has been specified.
+        /// </response>
+        /// <response code="404">
+        ///     The name of the login staff is incorrect.
+        /// </response>
+        /// <response code="204">
+        ///     The password changing is successful.
+        /// </response>
         [HttpPost("pwd/change")]
         [Authorize(Policy = "RegularUser")]
         public async Task<IActionResult> ChangePassword([FromBody] dynamic model)
@@ -149,6 +169,27 @@ namespace WeShare.Service.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new staff by using the given information.
+        /// </summary>
+        /// <param name="model">The model which contains the staff information.
+        /// Staff information should contain: name, localName, email, userName,
+        /// password, avatarBase64, isAdmin (optional).
+        /// </param>
+        /// <remarks>
+        /// This API requires administrative privilege.
+        /// </remarks>
+        /// <returns>The task which performs the staff creation operation.</returns>
+        /// <response code="400">
+        ///     The provided staff information is insufficient.
+        /// </response>
+        /// <response code="409">
+        ///     Either name, userName or email has already existed.
+        /// </response>
+        /// <response code="201">
+        ///     The staff creation was successful, the response returns the URI which
+        ///     can be used to access the newly created resource.
+        /// </response>
         [HttpPost]
         [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> CreateAsync([FromBody] dynamic model)
@@ -202,6 +243,20 @@ namespace WeShare.Service.Controllers
             return Created(Url.Action("GetByIdAsync", new { id = staff.Id }), staff.Id);
         }
 
+        /// <summary>
+        /// Deletes the staff information with the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier of the staff to be deleted.</param>
+        /// <returns>The task which performs the delete operation.</returns>
+        /// <remarks>
+        /// This API requires administrative privilege.
+        /// </remarks>
+        /// <response code="404">
+        ///     The given identifier is not found.
+        /// </response>
+        /// <response code="204">
+        ///     The deletion is successful.
+        /// </response>
         [HttpDelete("{id}")]
         [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> Delete(Guid id)
@@ -219,9 +274,29 @@ namespace WeShare.Service.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Gets all the staffs.
+        /// </summary>
+        /// <returns>The task which performs the retrieving operation.</returns>
+        /// <response code="200">
+        ///     The data retrieval is successful, the response body contains the
+        ///     returned values.
+        /// </response>
         [HttpGet]
         public async Task<IActionResult> GetAllAsync() => Ok(await this.dao.FindBySpecificationAsync<Staff>(s => s.IsActive));
 
+        /// <summary>
+        /// Gets the information of the staff with the given identifier.
+        /// </summary>
+        /// <param name="id">The identifier of the staff to be retrieved.</param>
+        /// <returns>The task which performs the retrieving operation.</returns>
+        /// <response code="404">
+        ///     The staff with the given identifier doesn't exist.
+        /// </response>
+        /// <response code="200">
+        ///     The data retrieval is successful, the response body contains the
+        ///     returned staff information.
+        /// </response>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
@@ -235,6 +310,15 @@ namespace WeShare.Service.Controllers
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Retrieves the ID of all of the staffs, and return the list
+        /// in a dis-ordered way.
+        /// </summary>
+        /// <returns>The task that performs the disorganize operation.</returns>
+        /// <response code="200">
+        ///     The data retrieval is successful, the response body contains the 
+        ///     dis-ordered ID list.
+        /// </response>
         [HttpGet]
         [Route("disorganize")]
         public async Task<IActionResult> DisorganizeStaffs()
@@ -242,6 +326,23 @@ namespace WeShare.Service.Controllers
                 .Disorganize()
                 .Select((x, i) => new { index = i, id = x.Id }));
 
+        /// <summary>
+        /// Updates the staff information.
+        /// </summary>
+        /// <param name="model">The model which contains the update specification information.</param>
+        /// <returns>The task which performs the update operation.</returns>
+        /// <remarks>
+        ///     This API requires the staff to be authenticated, or else the permission will be denied.
+        /// </remarks>
+        /// <response code="404">
+        ///     The authentication information contains the userName which doesn't exist.
+        /// </response>
+        /// <response code="400">
+        ///     The request contains incorrect path to the model to be updated.
+        /// </response>
+        /// <response code="204">
+        ///     The update is successful.
+        /// </response>
         [HttpPatch]
         [Authorize(Policy = "RegularUser")]
         public async Task<IActionResult> PatchAsync([FromBody] JsonPatchDocument<Staff> model)
