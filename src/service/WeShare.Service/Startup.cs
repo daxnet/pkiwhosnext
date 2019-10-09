@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -34,19 +36,16 @@ namespace WeShare.Service
             var mongoPort = Convert.ToInt32(Configuration["mongo:port"]);
 
             // MVC
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             // Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "WeShare API",
                     Version = "v1",
-                    Description = "The back-end RESTful APIs for WeShare application.",
-                    TermsOfService = "None",
-                    Contact = new Contact { Name = "Sunny Chen", Email = "daxnet@live.com", Url = "https://github.com/daxnet" },
-                    License = new License { Name = "Apache License 2.0", Url = "https://www.apache.org/licenses/LICENSE-2.0" }
+                    Description = "The back-end RESTful APIs for WeShare application."
                 });
 
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
@@ -84,7 +83,7 @@ namespace WeShare.Service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLifetime)
         {
             appLifetime.ApplicationStarted.Register(() =>
             {

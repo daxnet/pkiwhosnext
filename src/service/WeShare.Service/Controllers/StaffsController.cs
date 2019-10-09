@@ -354,7 +354,7 @@ namespace WeShare.Service.Controllers
                 return NotFound();
             }
 
-            model.ApplyTo(staff, this.ModelState);
+            model.ApplyTo(staff);
             if (!this.ModelState.IsValid)
             {
                 return new BadRequestObjectResult(this.ModelState);
